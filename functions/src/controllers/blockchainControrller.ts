@@ -4,9 +4,18 @@ import Blockchain from '../models/Blockchain';
 // eslint-disable-next-line new-cap
 const blockchainController: Router = express.Router();
 
-const blockchain = new Blockchain([], []);
+export const blockchain = new Blockchain([], []);
 
-blockchainController.use('/', (req: Request, res: Response) => {
+blockchainController.post('/mine', (req: Request, res: Response) => {
+  blockchain.createNewBlock();
+
+  res.status(200).json({
+    message: 'Blockhain mined correctly!',
+    blockchain,
+  });
+});
+
+blockchainController.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Blockhain get working',
     blockchain,
@@ -14,3 +23,4 @@ blockchainController.use('/', (req: Request, res: Response) => {
 });
 
 export default blockchainController;
+
